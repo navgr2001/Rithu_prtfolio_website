@@ -1,36 +1,49 @@
-export const SECTION_ROUTE_MAP = {
-  "/": "home",
-  "/about": "about",
-  "/projects": "projects",
-  "/skills": "skills",
-  "/contact": "contact",
-} as const;
+const DEFAULT_HEADER_OFFSET = 92;
 
-export function getSectionIdFromPath(pathname: string): string | null {
-  return SECTION_ROUTE_MAP[pathname as keyof typeof SECTION_ROUTE_MAP] ?? null;
+export function normalizeSinglePageUrl(): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const currentPath = window.location.pathname;
+
+  if (currentPath !== "/") {
+    window.history.replaceState({}, "", "/");
+  }
 }
 
 export function scrollToSectionById(
   sectionId: string,
   behavior: ScrollBehavior = "smooth",
-) {
+): void {
   const element = document.getElementById(sectionId);
 
   if (!element) {
     return;
   }
 
-  const headerElement = document.querySelector(
-    ".theme-header",
-  ) as HTMLElement | null;
+  const headerElement = document.querySelector<HTMLElement>(".theme-header");
 
-  const headerOffset = headerElement ? headerElement.offsetHeight + 12 : 92;
+  const headerOffset = headerElement
+    ? headerElement.offsetHeight + 12
+    : DEFAULT_HEADER_OFFSET;
 
-  const top =
+  const sectionTop =
     element.getBoundingClientRect().top + window.scrollY - headerOffset;
 
   window.scrollTo({
-    top: Math.max(top, 0),
+    top: Math.max(sectionTop, 0),
     behavior,
+  });
+}
+
+export function navigateToSection(
+  sectionId: string,
+  behavior: ScrollBehavior = "smooth",
+): void {
+  normalizeSinglePageUrl();
+
+  window.requestAnimationFrame(() => {
+    scrollToSectionById(sectionId, behavior);
   });
 }

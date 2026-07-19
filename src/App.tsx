@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "./sections/Header";
 import { IntroScreen } from "./sections/IntroScreen";
 import { HeroSection } from "./sections/HeroSection";
@@ -9,46 +8,43 @@ import { SkillsSection } from "./sections/SkillsSection";
 import { ContactSection } from "./sections/ContactSection";
 import { Footer } from "./sections/Footer";
 import { BackToTopButton } from "./components/BackToTopButton";
-import {
-  getSectionIdFromPath,
-  scrollToSectionById,
-} from "./utils/sectionNavigation";
+import { normalizeSinglePageUrl } from "./utils/sectionNavigation";
 
 type Theme = "dark" | "light";
 
-function App() {
-  const location = useLocation();
-  const navigate = useNavigate();
+const THEME_STORAGE_KEY = "portfolio-theme";
 
-  const [theme, setTheme] = useState<Theme>("light");
+function getInitialTheme(): Theme {
+  try {
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+
+    if (storedTheme === "dark" || storedTheme === "light") {
+      return storedTheme;
+    }
+  } catch {
+    // localStorage can be unavailable in some browser privacy modes.
+  }
+
+  return "light";
+}
+
+function App() {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    normalizeSinglePageUrl();
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
 
     try {
-      window.localStorage.setItem("portfolio-theme", theme);
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {
       // localStorage can fail in some privacy modes.
     }
   }, [theme]);
-
-  useEffect(() => {
-    const sectionId = getSectionIdFromPath(location.pathname);
-
-    if (!sectionId) {
-      return undefined;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      scrollToSectionById(
-        sectionId,
-        location.pathname === "/" ? "auto" : "smooth",
-      );
-    }, 50);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [location.pathname]);
 
   useEffect(() => {
     const protectedSelector = [
@@ -61,22 +57,22 @@ function App() {
       ".project-lightbox-thumbnails",
     ].join(",");
 
-    const isProtectedTarget = (target: EventTarget | null) =>
+    const isProtectedTarget = (target: EventTarget | null): boolean =>
       target instanceof Element && Boolean(target.closest(protectedSelector));
 
-    const handleContextMenu = (event: MouseEvent) => {
+    const handleContextMenu = (event: MouseEvent): void => {
       if (isProtectedTarget(event.target)) {
         event.preventDefault();
       }
     };
 
-    const handleDragStart = (event: DragEvent) => {
+    const handleDragStart = (event: DragEvent): void => {
       if (isProtectedTarget(event.target)) {
         event.preventDefault();
       }
     };
 
-    const handleSelectStart = (event: Event) => {
+    const handleSelectStart = (event: Event): void => {
       if (isProtectedTarget(event.target)) {
         event.preventDefault();
       }
@@ -95,13 +91,20 @@ function App() {
 
   const isLightMode = useMemo(() => theme === "light", [theme]);
 
-  const handleGetStarted = () => {
+  const handleGetStarted = (): void => {
     setShowIntro(false);
-    navigate("/", { replace: true });
+    normalizeSinglePageUrl();
 
     window.requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: "auto" });
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
     });
+  };
+
+  const handleToggleTheme = (): void => {
+    setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
   };
 
   if (showIntro) {
@@ -110,14 +113,7 @@ function App() {
 
   return (
     <div className="theme-shell min-h-screen">
-      <Header
-        isLightMode={isLightMode}
-        onToggleTheme={() =>
-          setTheme((currentTheme) =>
-            currentTheme === "dark" ? "light" : "dark",
-          )
-        }
-      />
+      <Header isLightMode={isLightMode} onToggleTheme={handleToggleTheme} />
 
       <main className="pt-20">
         <HeroSection />

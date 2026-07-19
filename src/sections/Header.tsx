@@ -1,11 +1,10 @@
 import { useState } from "react";
 import type { MouseEvent } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { HiMenuAlt3, HiMoon, HiSun, HiX } from "react-icons/hi";
 import { Container } from "../components/Container";
 import { navItems } from "../data/content";
-import { scrollToSectionById } from "../utils/sectionNavigation";
+import { navigateToSection } from "../utils/sectionNavigation";
 
 type HeaderProps = {
   isLightMode: boolean;
@@ -14,50 +13,39 @@ type HeaderProps = {
 
 export function Header({ isLightMode, onToggleTheme }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
 
-  const closeMobileMenu = () => {
+  const closeMobileMenu = (): void => {
     setIsOpen(false);
   };
 
-  const handleHomeClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    closeMobileMenu();
-
-    if (location.pathname !== "/") {
-      navigate("/");
-      return;
-    }
-
-    scrollToSectionById("home");
-  };
-
-  const handleNavClick =
-    (path: string, targetId: string) =>
-    (event: MouseEvent<HTMLAnchorElement>) => {
+  const handleSectionClick =
+    (targetId: string) =>
+    (event: MouseEvent<HTMLAnchorElement>): void => {
       event.preventDefault();
       closeMobileMenu();
-
-      if (location.pathname !== path) {
-        navigate(path);
-        return;
-      }
-
-      scrollToSectionById(targetId);
+      navigateToSection(targetId);
     };
 
   return (
     <motion.header
-      initial={{ opacity: 0, y: -24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      initial={{
+        opacity: 0,
+        y: -24,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.7,
+        ease: "easeOut",
+      }}
       className="theme-header fixed inset-x-0 top-0 z-[9999] w-full backdrop-blur-xl"
     >
       <Container className="relative z-[10002] flex min-h-20 items-center justify-between gap-4">
-        <Link
-          to="/"
-          onClick={handleHomeClick}
+        <a
+          href="/"
+          onClick={handleSectionClick("home")}
           className="theme-brand"
           aria-label="Go to home"
         >
@@ -67,21 +55,24 @@ export function Header({ isLightMode, onToggleTheme }: HeaderProps) {
                 ? "/images/lightmodelogo.png"
                 : "/images/darkmodelogo.png"
             }
-            alt="Rithu Savindaya"
+            alt="Rithu Savindaya interior design logo"
             className="theme-brand-image"
           />
-        </Link>
+        </a>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav
+          className="hidden items-center gap-8 md:flex"
+          aria-label="Primary navigation"
+        >
           {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              onClick={handleNavClick(item.path, item.targetId)}
+            <a
+              key={item.targetId}
+              href="/"
+              onClick={handleSectionClick(item.targetId)}
               className="nav-link"
             >
               {item.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
@@ -113,7 +104,11 @@ export function Header({ isLightMode, onToggleTheme }: HeaderProps) {
 
             <motion.span
               layout
-              transition={{ type: "spring", stiffness: 350, damping: 26 }}
+              transition={{
+                type: "spring",
+                stiffness: 350,
+                damping: 26,
+              }}
               className={`theme-toggle-thumb ${
                 isLightMode
                   ? "theme-toggle-thumb--light translate-x-0"
@@ -124,10 +119,11 @@ export function Header({ isLightMode, onToggleTheme }: HeaderProps) {
 
           <button
             type="button"
-            onClick={() => setIsOpen((prev) => !prev)}
+            onClick={() => setIsOpen((currentState) => !currentState)}
             className="theme-icon-button inline-flex h-11 w-11 items-center justify-center rounded-full md:hidden"
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
           >
             {isOpen ? <HiX size={22} /> : <HiMenuAlt3 size={22} />}
           </button>
@@ -144,17 +140,20 @@ export function Header({ isLightMode, onToggleTheme }: HeaderProps) {
       )}
 
       {isOpen && (
-        <div className="theme-mobile-menu relative z-[10002] md:hidden">
+        <div
+          id="mobile-navigation"
+          className="theme-mobile-menu relative z-[10002] md:hidden"
+        >
           <Container className="flex flex-col py-5">
             {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
+              <a
+                key={item.targetId}
+                href="/"
                 className="theme-mobile-link border-b py-4 text-sm uppercase tracking-[0.3em] last:border-b-0"
-                onClick={handleNavClick(item.path, item.targetId)}
+                onClick={handleSectionClick(item.targetId)}
               >
                 {item.label}
-              </Link>
+              </a>
             ))}
           </Container>
         </div>

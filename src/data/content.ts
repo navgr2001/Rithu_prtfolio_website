@@ -211,8 +211,20 @@ export const projects: Project[] = [
 ];
 
 export const navItems = [
-  { label: "About", path: "/about", targetId: "about" },
-  { label: "Projects", path: "/projects", targetId: "projects" },
-  { label: "Skills", path: "/skills", targetId: "skills" },
-  { label: "Contact", path: "/contact", targetId: "contact" },
-];
+  {
+    label: "About",
+    targetId: "about",
+  },
+  {
+    label: "Projects",
+    targetId: "projects",
+  },
+  {
+    label: "Skills",
+    targetId: "skills",
+  },
+  {
+    label: "Contact",
+    targetId: "contact",
+  },
+] as const;

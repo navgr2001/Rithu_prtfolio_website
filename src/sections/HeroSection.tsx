@@ -1,14 +1,11 @@
 import { useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "motion/react";
 import { Container } from "../components/Container";
 import { designer } from "../data/content";
-import { scrollToSectionById } from "../utils/sectionNavigation";
+import { navigateToSection } from "../utils/sectionNavigation";
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -20,13 +17,8 @@ export function HeroSection() {
   const heroContentY = useTransform(scrollYProgress, [0, 1], [0, -24]);
   const heroVisualY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
-  const handleProjectsClick = () => {
-    if (location.pathname !== "/projects") {
-      navigate("/projects");
-      return;
-    }
-
-    scrollToSectionById("projects");
+  const handleProjectsClick = (): void => {
+    navigateToSection("projects");
   };
 
   return (
@@ -39,6 +31,7 @@ export function HeroSection() {
         style={{ y: leftOrbY }}
         className="hero-orb left-[8%] top-20"
       />
+
       <motion.div
         style={{ y: rightOrbY }}
         className="hero-orb right-[10%] top-44"
@@ -50,9 +43,18 @@ export function HeroSection() {
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           <motion.div
             style={{ y: heroContentY }}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            initial={{
+              opacity: 0,
+              y: 40,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.8,
+              ease: "easeOut",
+            }}
             className="relative z-10 text-center sm:text-left"
           >
             <p className="theme-pill mb-5 inline-flex rounded-full px-4 py-2 text-xs uppercase tracking-[0.35em]">
@@ -69,10 +71,15 @@ export function HeroSection() {
 
             <div className="hero-action-buttons mt-10 flex flex-row items-center justify-center gap-3 sm:justify-start sm:gap-4">
               <motion.a
-                href="/rithu-savindaya-portfolio.pdf"
+                href="/dewmini cv new.pdf.pdf"
                 download
-                whileHover={{ y: -3, scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{
+                  y: -3,
+                  scale: 1.01,
+                }}
+                whileTap={{
+                  scale: 0.98,
+                }}
                 className="primary-button hero-action-button"
               >
                 Download Portfolio
@@ -80,8 +87,13 @@ export function HeroSection() {
 
               <motion.button
                 type="button"
-                whileHover={{ y: -3, scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{
+                  y: -3,
+                  scale: 1.01,
+                }}
+                whileTap={{
+                  scale: 0.98,
+                }}
                 onClick={handleProjectsClick}
                 className="secondary-button hero-action-button"
               >
@@ -92,20 +104,32 @@ export function HeroSection() {
 
           <motion.div
             style={{ y: heroVisualY }}
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
+            initial={{
+              opacity: 0,
+              scale: 0.94,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.15,
+              ease: "easeOut",
+            }}
             className="relative"
           >
             <div className="theme-hero-card relative mx-auto aspect-[4/5] max-w-md overflow-hidden p-4">
               <img
                 src="/images/profimage1.jpeg"
-                alt="Interior designer portfolio hero visual"
+                alt={`${designer.name}, interior designer`}
                 className="h-full w-full rounded-[1.5rem] object-cover"
               />
 
               <motion.div
-                animate={{ y: [0, -8, 0] }}
+                animate={{
+                  y: [0, -8, 0],
+                }}
                 transition={{
                   duration: 5,
                   repeat: Infinity,
@@ -113,13 +137,13 @@ export function HeroSection() {
                 }}
                 className="theme-hero-caption absolute bottom-7 left-7 right-7 rounded-[1.5rem] p-5"
               >
-                <p className="theme-meta text-xs uppercase tracking-[0.35em]">
+                <p className="theme-eyebrow text-xs uppercase tracking-[0.3em]">
                   {designer.role}
                 </p>
-                <p className="mt-2 text-xl font-medium text-white">
-                  {designer.name}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-zinc-400">
+
+                <p className="theme-heading mt-2 text-xl">{designer.name}</p>
+
+                <p className="theme-copy mt-2 text-sm">
                   Modern spaces. Warm palettes. Functional beauty.
                 </p>
               </motion.div>
