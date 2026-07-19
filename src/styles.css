@@ -3361,7 +3361,7 @@ textarea:focus-visible {
   --text-secondary: #292929;
   --text-muted: #595959;
   --text-subtle: #777777;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color: rgba(0, 0, 0, 0.10);
   --background-gradient: #f7f7f7;
 }
 
@@ -3457,9 +3457,7 @@ textarea:focus-visible {
 [data-theme="light"] .theme-hero-card {
   border: 8px solid #ffffff;
   outline: 1px solid #d8d8d8;
-  box-shadow:
-    18px 18px 0 #800020,
-    0 22px 54px rgba(0, 0, 0, 0.14);
+  box-shadow: 18px 18px 0 #800020, 0 22px 54px rgba(0, 0, 0, 0.14);
 }
 
 [data-theme="light"] .theme-hero-card::after {
@@ -3608,9 +3606,7 @@ textarea:focus-visible {
 [data-theme="light"] .contact-intro-image-wrap {
   border: 8px solid #ffffff;
   outline: 1px solid #d8d8d8;
-  box-shadow:
-    -15px 15px 0 #800020,
-    0 20px 46px rgba(0, 0, 0, 0.12);
+  box-shadow: -15px 15px 0 #800020, 0 20px 46px rgba(0, 0, 0, 0.12);
 }
 
 [data-theme="light"] footer {
@@ -3635,14 +3631,68 @@ textarea:focus-visible {
 
 @media (max-width: 767px) {
   [data-theme="light"] .theme-hero-card {
-    box-shadow:
-      10px 10px 0 #800020,
-      0 18px 40px rgba(0, 0, 0, 0.12);
+    box-shadow: 10px 10px 0 #800020, 0 18px 40px rgba(0, 0, 0, 0.12);
   }
 
   [data-theme="light"] .contact-intro-image-wrap {
-    box-shadow:
-      -9px 9px 0 #800020,
-      0 16px 34px rgba(0, 0, 0, 0.1);
+    box-shadow: -9px 9px 0 #800020, 0 16px 34px rgba(0, 0, 0, 0.1);
   }
+}
+
+/* Dark mode contrast refinement
+   Keep maroon as the brand/action color, but use a lighter maroon tint for
+   small text and decorative labels so they remain readable on black. */
+:root:not([data-theme="light"]),
+[data-theme="dark"] {
+  --accent-text: #f0a3b7;
+  --accent-text-strong: #ffd2dd;
+  --accent-border-visible: #b83f5f;
+}
+
+:root:not([data-theme="light"]) .theme-eyebrow,
+:root:not([data-theme="light"]) .theme-meta,
+[data-theme="dark"] .theme-eyebrow,
+[data-theme="dark"] .theme-meta {
+  color: var(--accent-text);
+}
+
+:root:not([data-theme="light"]) .theme-pill,
+:root:not([data-theme="light"]) .project-badge,
+:root:not([data-theme="light"]) .project-gallery-zoom-hint,
+[data-theme="dark"] .theme-pill,
+[data-theme="dark"] .project-badge,
+[data-theme="dark"] .project-gallery-zoom-hint {
+  color: var(--accent-text-strong);
+  border-color: var(--accent-border-visible);
+}
+
+:root:not([data-theme="light"]) .nav-link:hover,
+:root:not([data-theme="light"]) a:not(.primary-button):hover,
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] a:not(.primary-button):hover {
+  color: var(--accent-text-strong);
+}
+
+:root:not([data-theme="light"]) .contact-status-message--error,
+[data-theme="dark"] .contact-status-message--error {
+  color: #ffc2d0;
+  border-color: #b83f5f;
+  background: rgba(184, 63, 95, 0.14);
+}
+
+:root:not([data-theme="light"]) .input-field:focus,
+[data-theme="dark"] .input-field:focus {
+  border-color: #c95773;
+  box-shadow: 0 0 0 4px rgba(201, 87, 115, 0.18);
+}
+
+:root:not([data-theme="light"]) a:focus-visible,
+:root:not([data-theme="light"]) button:focus-visible,
+:root:not([data-theme="light"]) input:focus-visible,
+:root:not([data-theme="light"]) textarea:focus-visible,
+[data-theme="dark"] a:focus-visible,
+[data-theme="dark"] button:focus-visible,
+[data-theme="dark"] input:focus-visible,
+[data-theme="dark"] textarea:focus-visible {
+  outline-color: rgba(240, 163, 183, 0.82);
 }
