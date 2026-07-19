@@ -76,15 +76,6 @@ npm run preview
 - Portfolio images: `public/images/portfolio/`
 - Downloadable portfolio PDF: `public/rithu-savindaya-portfolio.pdf`
 
-## Contact form setup
 
-The form is already prepared for EmailJS and reCAPTCHA. Add real keys to `.env`:
 
-```env
-VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
-VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
-VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
-VITE_RECAPTCHA_SITE_KEY=your_google_recaptcha_site_key
-```
 
-After editing `.env`, restart the development server.
