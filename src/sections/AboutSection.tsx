@@ -115,8 +115,8 @@ export function AboutSection() {
               {designer.about}
             </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <StatItem value={2} label="Years" />
-              <StatItem value={18} label="Concepts" />
+              <StatItem value={1} label="Years" />
+              <StatItem value={15} label="Concepts" />
               <StatItem value={10} label="Clients" />
             </div>
           </AnimatedCard>
