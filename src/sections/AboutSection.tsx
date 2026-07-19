@@ -106,7 +106,7 @@ export function AboutSection() {
           <SectionHeading
             eyebrow="About Me"
             title="My Goal"
-            description='"Bringing beauty into real life. A modern house or living space should reflect the personality of the owner."'
+            description='"Creating timeless interiors that combine beauty, comfort, and functionality, making every space a true reflection of its owner."'
             descriptionClassName="about-goal-holiday-text"
           />
 
