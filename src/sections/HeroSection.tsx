@@ -71,7 +71,7 @@ export function HeroSection() {
 
             <div className="hero-action-buttons mt-10 flex flex-row items-center justify-center gap-3 sm:justify-start sm:gap-4">
               <motion.a
-                href="/dewmini cv new.pdf.pdf"
+                href="\rithu-savindaya-portfolio.pdf"
                 download
                 whileHover={{
                   y: -3,

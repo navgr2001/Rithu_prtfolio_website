@@ -1659,7 +1659,7 @@ img {
 
 .project-gallery-main::before,
 .project-lightbox-stage::before {
-  content: "© Dewmini Rodrigo";
+  content: "© Rithu Savindaya";
   position: absolute;
   left: 1rem;
   bottom: 1rem;
@@ -3361,7 +3361,7 @@ textarea:focus-visible {
   --text-secondary: #292929;
   --text-muted: #595959;
   --text-subtle: #777777;
-  --shadow-color: rgba(0, 0, 0, 0.10);
+  --shadow-color: rgba(0, 0, 0, 0.1);
   --background-gradient: #f7f7f7;
 }
 
@@ -3457,7 +3457,9 @@ textarea:focus-visible {
 [data-theme="light"] .theme-hero-card {
   border: 8px solid #ffffff;
   outline: 1px solid #d8d8d8;
-  box-shadow: 18px 18px 0 #800020, 0 22px 54px rgba(0, 0, 0, 0.14);
+  box-shadow:
+    18px 18px 0 #800020,
+    0 22px 54px rgba(0, 0, 0, 0.14);
 }
 
 [data-theme="light"] .theme-hero-card::after {
@@ -3606,7 +3608,9 @@ textarea:focus-visible {
 [data-theme="light"] .contact-intro-image-wrap {
   border: 8px solid #ffffff;
   outline: 1px solid #d8d8d8;
-  box-shadow: -15px 15px 0 #800020, 0 20px 46px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    -15px 15px 0 #800020,
+    0 20px 46px rgba(0, 0, 0, 0.12);
 }
 
 [data-theme="light"] footer {
@@ -3631,11 +3635,15 @@ textarea:focus-visible {
 
 @media (max-width: 767px) {
   [data-theme="light"] .theme-hero-card {
-    box-shadow: 10px 10px 0 #800020, 0 18px 40px rgba(0, 0, 0, 0.12);
+    box-shadow:
+      10px 10px 0 #800020,
+      0 18px 40px rgba(0, 0, 0, 0.12);
   }
 
   [data-theme="light"] .contact-intro-image-wrap {
-    box-shadow: -9px 9px 0 #800020, 0 16px 34px rgba(0, 0, 0, 0.1);
+    box-shadow:
+      -9px 9px 0 #800020,
+      0 16px 34px rgba(0, 0, 0, 0.1);
   }
 }
 
